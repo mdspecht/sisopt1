@@ -5,7 +5,9 @@
 #include "../include/cthread.h"
 #include "../include/cdata.h"
 #include "../include/aux.h"
-
+#include "../include/queue.h"
+#include "../include/context.h"
+#include "../include/tcb.h"
 
 
 void testa_cidentify(void){
@@ -44,10 +46,11 @@ void conte(){
 
 int main(){
 
-	ccreate(test_ccreate_func,NULL,0);
-	ccreate(test_ccreate_func,NULL,0);
-	ccreate(test_ccreate_func,NULL,0);
-	ccreate(test_ccreate_func,NULL,0);
+	ccreate(test_ccreate_func,NULL,0); //THREAD MAIN
+	//PROCURA THREAD MAIN - TID = 0 pois foi a primeira a ser criada.
+
+	//COLOCAR EM EXECUCAO A THREAD MAIN
+
 	printFila2(ready_queue);
 
 	
