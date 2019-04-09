@@ -6,16 +6,11 @@
 #include "../include/aux.h"
 #include "../include/queue.h"
 #include "../include/context.h"
-#include "../include/tcb.h"
 #include "../include/cdata.h"
 #include "../include/support.h"
 
 
-/*
-*Não há necessidade de se preocupar com o reaproveitamento do identificador da
-thread (tid), pois os testes não esgotarão essa capacidade.
-*/
-static int tid_global = 0;
+
 
 
 
@@ -31,12 +26,6 @@ int init_cthread(){
     return 0;
 }
 
-/*
-*Cria as filas
-*/
-
-
-
 
 int run_main_thread(PFILA2 ready_queue){
     //PROCURA A THREAD COM MAIS PRIORIDADE NA FILA
@@ -48,15 +37,6 @@ int run_main_thread(PFILA2 ready_queue){
 
 
 
-void reset_tid_global(){
-    tid_global = 1;
-}
-
-int next_tid(){
-    //printf("tid: %d\n",tid_global );
-    return tid_global++;
-
-}
 
 
 

@@ -3,11 +3,15 @@
 
 #include "../include/cdata.h"
 #include "../include/support.h"
+#include "../include/queue.h"
+#include "../include/context.h"
 
+
+
+#define MAIN_TID 0
 
 int init_cthread();
-void reset_tid_global();
-int next_tid();
+int run_main_thread(PFILA2 ready_queue);
 
 #endif 
 

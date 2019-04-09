@@ -1,0 +1,2 @@
+gcc main.c aux.c cthread.c queue.c tcb.c context.c ../bin/support.o -o main
+./main

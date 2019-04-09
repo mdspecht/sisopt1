@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <ucontext.h>
-#include "../include/teste.h"
+
+
 #include "../include/cthread.h"
-#include "../include/cdata.h"
 #include "../include/aux.h"
 #include "../include/queue.h"
 #include "../include/context.h"
-#include "../include/tcb.h"
+#include "../include/cdata.h"
 
 
 void testa_cidentify(void){
@@ -47,11 +47,15 @@ void conte(){
 int main(){
 
 	ccreate(test_ccreate_func,NULL,0); //THREAD MAIN
+	printFila2(ready_queue);// TESTA SE THREAD MAIN ESTA NA FILA
+
 	//PROCURA THREAD MAIN - TID = 0 pois foi a primeira a ser criada.
-
 	//COLOCAR EM EXECUCAO A THREAD MAIN
+	runningTCB = findTCBbyTid(ready_queue,MAIN_TID);
+	printf("running tid: %d\n",runningTCB->tid); //TESTA SE A THREAD MAIN ESTA EXECUTANDO
+	
 
-	printFila2(ready_queue);
+	
 
 	
 		

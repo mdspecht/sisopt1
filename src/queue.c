@@ -3,12 +3,12 @@
 #include <ucontext.h>
 #include <stdio.h>
 
-#include "../include/aux.h"
+
 #include "../include/cdata.h"
 #include "../include/support.h"
 #include "../include/queue.h"
 #include "../include/context.h"
-#include "../include/tcb.h"
+
 
 
 int create_queues(){
@@ -32,7 +32,7 @@ int create_queues(){
     return 0;
 }
 
-int IsFilaEmpty(PFILA2 pFILA2){
+int isFilaEmpty(PFILA2 pFILA2){
     if (FirstFila2(pFILA2)==0)
         return 0;
     return 1;
@@ -40,7 +40,7 @@ int IsFilaEmpty(PFILA2 pFILA2){
 
 void printFila2(PFILA2 fila){
     
-    if (IsFilaEmpty(fila)==1){
+    if (isFilaEmpty(fila)==1){
         puts("FILA VAZIA");
     } 
     else{
@@ -56,8 +56,8 @@ void printFila2(PFILA2 fila){
     
 }
 
-int appendFilaPrio(PFILA2 pfila, TCB_t *tcb) {
-    TCB_t *tcb_it;
+int appendFilaPrio(PFILA2 pfila, TCB_t* tcb) {
+    TCB_t* tcb_it;
 
     // pfile vazia?
     if (FirstFila2(pfila)==0) { //SETA O ITERADOR NO COMECO DA FILA

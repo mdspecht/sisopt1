@@ -8,7 +8,7 @@
 #include "../include/support.h"
 #include "../include/queue.h"
 #include "../include/context.h"
-#include "../include/tcb.h"
+
 
 /*
 *Não há necessidade de se preocupar com o reaproveitamento do identificador da
@@ -17,16 +17,6 @@ thread (tid), pois os testes não esgotarão essa capacidade.
 static int tid_global = 0;
 
 
-TCB_t* findTCBbyTid(PFILA2 queue, int tid){
-    if (FirstFila2(queue)==0){
-        do {
-            TCB_t* tcb = queue->it->node;
-            if (tcb->tid==tid)
-                return tcb;
-        } while (NextFila2(queue)==0);
-    }
-    return NULL;
-}
 
 /*
 *Inicia o TCB com os valores de criacao de thread
@@ -51,4 +41,16 @@ TCB_t* create_main_tcb(ucontext_t* context){
     tcb->context = *context;
     
     return tcb;
+}
+
+
+TCB_t* findTCBbyTid(PFILA2 queue, int tid){
+    if (FirstFila2(queue)==0){
+        do {
+            TCB_t* tcb = queue->it->node;
+            if (tcb->tid==tid)
+                return tcb;
+        } while (NextFila2(queue)==0);
+    }
+    return NULL;
 }

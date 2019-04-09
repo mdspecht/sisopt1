@@ -3,12 +3,12 @@
 #include <ucontext.h>
 #include <stdio.h>
 
-#include "../include/aux.h"
+
 #include "../include/cdata.h"
 #include "../include/support.h"
 #include "../include/queue.h"
 #include "../include/context.h"
-#include "../include/tcb.h"
+
 
 
 /*
