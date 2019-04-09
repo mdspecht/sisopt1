@@ -51,8 +51,9 @@ TCB_t* create_tcb(ucontext_t* context, int prio){
 }
 
 
+/*
+Incrementa a variavel TID
+*/
 int next_tid(){
-    //printf("tid: %d\n",tid_global );
     return tid_global++;
-
 }

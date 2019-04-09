@@ -15,7 +15,7 @@
 *Aloca um contexto.
 */
 
-ucontext_t* create_context(){
+ucontext_t* create_context(void* start){
     
     ucontext_t* context = malloc(sizeof(*context));
     if (context==NULL){
@@ -36,6 +36,8 @@ ucontext_t* create_context(){
         printf("ERRO AO ALOCAR A STACK!!");
         exit(-1);
     }
+
+    makecontext(context, (void (*)(void)) start, 0) ;
 
     return context;
 

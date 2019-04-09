@@ -12,7 +12,7 @@ PFILA2 finished_queue;
 PFILA2 blocked_queue;
 
 
-int create_queues();
+int createQueues();
 int appendFilaPrio(PFILA2 pfila, TCB_t* tcb);
 void printFila2(PFILA2 fila);
 int isFilaEmpty(PFILA2 pFILA2);

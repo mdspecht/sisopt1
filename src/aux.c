@@ -18,7 +18,7 @@ int so_start = 0;
 
 int init_cthread(){
     if(so_start==0){ 
-        create_queues(); //CRIA AS FILAS: APTO,BLOQUEADO E FINALIZADO      
+        createQueues(); //CRIA AS FILAS: APTO,BLOQUEADO E FINALIZADO      
                 
         so_start = 1;
     }

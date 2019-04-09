@@ -7,7 +7,7 @@
 #include "../include/context.h"
 
 
-ucontext_t* create_context();
+ucontext_t* create_context(void* start);
 void even1(ucontext_t* cont1,ucontext_t* cont2) ;
 void even2(ucontext_t* cont1,ucontext_t* cont2) ;
 

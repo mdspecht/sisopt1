@@ -10,8 +10,10 @@
 #include "../include/context.h"
 
 
-
-int create_queues(){
+/*
+Aloca e cria as filas APTO,BLOQUEADO E TERMINADO
+*/
+int createQueues(){
 
     //ALOCA NA MEMORIA AS FILAS
     ready_queue = malloc(sizeof(*ready_queue));
@@ -32,12 +34,34 @@ int create_queues(){
     return 0;
 }
 
+/*
+Insere na fila de aptos ordenada pela prioridade
+*/
+int appendFilaPrio(PFILA2 pfila, TCB_t* tcb) {
+    TCB_t* tcb_it;
+
+    // pfile vazia?
+    if (FirstFila2(pfila)==0) { //SETA O ITERADOR NO COMECO DA FILA
+        do {
+            tcb_it = (TCB_t *) GetAtIteratorFila2(pfila);
+            if (tcb->prio < tcb_it->prio) {
+                return InsertBeforeIteratorFila2(pfila, tcb);
+            }
+        } while (NextFila2(pfila)==0);
+    }
+    return AppendFila2(pfila, (void *)tcb);
+}
+
 int isFilaEmpty(PFILA2 pFILA2){
     if (FirstFila2(pFILA2)==0)
         return 0;
     return 1;
 }
 
+/*
+*DEBUG
+Imprime TID das threads
+*/
 void printFila2(PFILA2 fila){
     
     if (isFilaEmpty(fila)==1){
@@ -53,22 +77,9 @@ void printFila2(PFILA2 fila){
             printf("tid = %d\n",tcb->tid );
         }
     }
-    
+    printf("FIM DA FILA\n\n");
 }
 
-int appendFilaPrio(PFILA2 pfila, TCB_t* tcb) {
-    TCB_t* tcb_it;
 
-    // pfile vazia?
-    if (FirstFila2(pfila)==0) { //SETA O ITERADOR NO COMECO DA FILA
-        do {
-            tcb_it = (TCB_t *) GetAtIteratorFila2(pfila);
-            if (tcb->prio < tcb_it->prio) {
-                return InsertBeforeIteratorFila2(pfila, tcb);
-            }
-        } while (NextFila2(pfila)==0);
-    }
-    return AppendFila2(pfila, (void *)tcb);
-}
 
 
