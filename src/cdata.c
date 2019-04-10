@@ -36,6 +36,32 @@ TCB_t* findTCBbyTid(PFILA2 queue, int tid){
 }
 
 /*
+Procura TCB na FILA DE APTOS pela PRIORIDADE
+*/
+TCB_t* findTCBbyPrio(PFILA2 queue){
+    if (FirstFila2(queue)==0){
+        do {
+            TCB_t* tcb = queue->it->node;
+            if (tcb->prio==PRIO_MAX)
+                return tcb;
+        } while (NextFila2(queue)==0);
+
+        do {
+            TCB_t* tcb = queue->it->node;
+            if (tcb->prio==PRIO_MED)
+                return tcb;
+        } while (NextFila2(queue)==0);
+
+        do {
+            TCB_t* tcb = queue->it->node;
+            if (tcb->prio==PRIO_MIN)
+                return tcb;
+        } while (NextFila2(queue)==0);
+    }
+    return NULL;
+}
+
+/*
 Inicia o TCB com os valores de criacao de thread
 Quando criada, uma thread nova sempre vai para a FILA DE APTOS
 */

@@ -1,5 +1,7 @@
 #include "../include/teste.h"
 
-int funct(){
-    return 33;
+void testa_cidentify(void){
+    char name[40];
+    int a = cidentify(name,sizeof(name));
+    puts(name);
 }

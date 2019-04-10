@@ -47,6 +47,7 @@ TCB_t* runningTCB;
 
 TCB_t* create_tcb(ucontext_t* context,int prio);
 TCB_t* findTCBbyTid(PFILA2 queue, int tid);
+TCB_t* findTCBbyPrio(PFILA2 queue);
 
 int next_tid();
 

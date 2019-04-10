@@ -15,7 +15,7 @@
 *Aloca um contexto.
 */
 
-ucontext_t* create_context(void* start){
+ucontext_t* createContext(void* func){
     
     ucontext_t* context = malloc(sizeof(*context));
     if (context==NULL){
@@ -37,20 +37,29 @@ ucontext_t* create_context(void* start){
         exit(-1);
     }
 
-    makecontext(context, (void (*)(void)) start, 0) ;
+    //getcontext(context);
+    //makecontext(context,(void (*)(void)) func, 0);
 
     return context;
 
 }
 
 
-void even2(ucontext_t* cont1,ucontext_t* cont2) {
+//THREADS CRIADAS APONTAM PARA O THREAD MAIN QUE VAI DECIDIR QUAL O PROXIMA THREAD A USAR A CPU
+void set_uc_link(TCB_t* tcb){
+    getcontext(&tcb->context);
+    tcb->context.uc_link = &mainThread->context;
+    makecontext(&tcb->context,(void (*)(void))f1,0);
+}
+
+
+void *even2(ucontext_t* cont1,ucontext_t* cont2) {
     int i;
 
      for (i =0; i <=10; i=i+2 )
          printf("BBB%3d\n\n", i);
 
-     return;
+     
 
      /* A função even ao terminar vai para a função indicada por:
       * "setcontext(&even_context->uc_link);", ou seja, a main,
@@ -58,7 +67,7 @@ void even2(ucontext_t* cont1,ucontext_t* cont2) {
 } 
 
 
-void even1(ucontext_t* cont1,ucontext_t* cont2) {
+void *even1(ucontext_t* cont1,ucontext_t* cont2) {
     int i;
 
      for (i =0; i <=10; i=i+2 ){
@@ -68,7 +77,7 @@ void even1(ucontext_t* cont1,ucontext_t* cont2) {
 
         swapcontext(cont1,cont2);
 
-     return;
+     
 
      /* A função even ao terminar vai para a função indicada por:
       * "setcontext(&even_context->uc_link);", ou seja, a main,

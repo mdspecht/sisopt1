@@ -17,7 +17,9 @@
 
 int ccreate (void* (*start)(void*), void *arg, int prio) {
     init_cthread(); //CRIA AS FILAS E INDICA QUE SISTEMA COMECOU
-    TCB_t* tcb = create_tcb(create_context(start),prio);
+
+    TCB_t* tcb = create_tcb(createContext(start),prio);     //createContext tem passar funcao e funcao main 
+    set_uc_link(tcb);
     appendFilaPrio(ready_queue, tcb);
 	return tcb->tid;
 }
@@ -29,7 +31,8 @@ int csetprio(int tid, int prio) {
 }
 
 int cyield(void) {
-
+    appendFilaPrio(ready_queue,runningTCB);
+    runningTCB=NULL;
 	return 0;
 }
 
