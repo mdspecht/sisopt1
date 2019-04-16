@@ -12,7 +12,9 @@
 int so_start;
 
 int init();
-void endThread();
+void end();
+void runThread(TCB_t* tcb);
+void runNextThread();
 
 #endif 
 

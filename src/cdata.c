@@ -61,11 +61,19 @@ TCB_t* findTCBbyPrio(PFILA2 queue){
     return NULL;
 }
 
+int removeTCBbyTid(PFILA2 queue, int tid) {
+    if (findTCBbyTid(queue, tid)!=NULL) {
+        DeleteAtIteratorFila2(queue);
+        return 1;
+    }
+    return 0;
+}
+
 /*
 Inicia o TCB com os valores de criacao de thread
 Quando criada, uma thread nova sempre vai para a FILA DE APTOS
 */
-TCB_t* create_tcb(ucontext_t* context, int prio){
+TCB_t* createTcb(ucontext_t* context, int prio){
 
     TCB_t* tcb = malloc(sizeof(*tcb));
     tcb->tid = tid_global++;

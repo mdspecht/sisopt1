@@ -47,8 +47,8 @@ ucontext_t* createContext(void* (*start)(void*), void *arg,void* (*end)(void*)){
     context->uc_link = endContext;
     endContext->uc_link = NULL;
 
-    makecontext(endContext,(void*) start, 1, arg);
-    makecontext(context,(void*) end, 1, arg);
+    makecontext(endContext,(void*) end, 1, arg);
+    makecontext(context,(void*) start, 1, arg);
 
     return context;
 }

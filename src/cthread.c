@@ -19,8 +19,8 @@ int ccreate (void* (*start)(void*), void *arg, int prio) {
 
     
     init(); 
-    ucontext_t* context = createContext(start,arg,(void*) &endThread);
-    TCB_t* tcb = create_tcb(context,prio); 
+    ucontext_t* context = createContext(start,arg,(void*) &end);
+    TCB_t* tcb = createTcb(context,prio); 
     tcb->state = PROCST_APTO;
     appendFilaPrio(ready_queue, tcb);
 	return tcb->tid;
@@ -40,7 +40,21 @@ int cyield(void) {
 }
 
 int cjoin(int tid) {
-	return -1;
+    //BLOCK THREAD QUE ESTÁ EXECUTANDO
+    //*********
+    if(runningTCB!=NULL){
+        AppendFila2(blocked_queue,runningTCB);
+        printf("THREAD EXECUTANDO FOI PARA ESTADO BLOQUEADO\n");
+    }
+    else{
+        printf("SEM THREAD EXECUTANDO\n");
+    }
+    //RUN THREAD
+	TCB_t* tcb = findTCBbyTid(ready_queue, tid);
+    printf("PROXIMA TCB A EXECUTAR: %d \n",tcb->tid);
+    runThread(tcb);
+
+	return 0;
 }
 
 int csem_init(csem_t *sem, int count) {

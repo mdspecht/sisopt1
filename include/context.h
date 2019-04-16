@@ -8,6 +8,7 @@
 #include "../include/context.h"
 
 
+ucontext_t* contextMain;
 
 ucontext_t* allocContext();
 ucontext_t* createContext(void* (*start)(void*), void *arg,void* (*end)(void*));
