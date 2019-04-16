@@ -41,7 +41,6 @@ int cyield(void) {
 
 int cjoin(int tid) {
     //BLOCK THREAD QUE ESTÁ EXECUTANDO
-    //*********
     if(runningTCB!=NULL){
         AppendFila2(blocked_queue,runningTCB);
         printf("THREAD EXECUTANDO FOI PARA ESTADO BLOQUEADO\n");

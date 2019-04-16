@@ -58,6 +58,10 @@ void runThread(TCB_t* tcb){
 	if(isFilaEmpty(ready_queue)==1){
 		printf("SEM THREADS NA FILA DE APTOS\n");
 	}
+    else{
+        FirstFila2(ready_queue);
+        runThread(ready_queue->it->node);
+    }
     
     
 }   

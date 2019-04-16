@@ -61,6 +61,9 @@ TCB_t* findTCBbyPrio(PFILA2 queue){
     return NULL;
 }
 
+/*
+Deleta uma TCB de uma fila pelo TID
+*/
 int removeTCBbyTid(PFILA2 queue, int tid) {
     if (findTCBbyTid(queue, tid)!=NULL) {
         DeleteAtIteratorFila2(queue);
