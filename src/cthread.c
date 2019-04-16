@@ -17,7 +17,6 @@
 
 int ccreate (void* (*start)(void*), void *arg, int prio) {
 
-    
     init(); 
     ucontext_t* context = createContext(start,arg,(void*) &end);
     TCB_t* tcb = createTcb(context,prio); 
@@ -28,15 +27,34 @@ int ccreate (void* (*start)(void*), void *arg, int prio) {
 
 int csetprio(int tid, int prio) {
     //tid = NULL; //Na versão 2019/01, deixar sempre esse campo como NULL
-
-	return -1;
+    runningTCB->prio=prio;
+    if(runningTCB->prio==prio){
+        return 0;
+    }
+    else{
+        return -1;
+    }
+	
 }
 
 int cyield(void) {
-    appendFilaPrio(ready_queue,runningTCB);
-    runningTCB->state = PROCST_APTO;
-    runningTCB=NULL;
+    //SALVA O CONTEXTO
+    int ret=0;
+    getcontext(&runningTCB->context);
+    
+    if(ret==0){
+        printf("THREAD %d CEDEU A CPU\n",runningTCB->tid);
+        ret=1;
+        //COLOCA THREAD NA FILA DE APTOS 
+        appendFilaPrio(ready_queue,runningTCB);
+        runningTCB->state = PROCST_APTO;
+        runningTCB=NULL;
+
+        runNextThread();     
+    }
+    
 	return 0;
+   
 }
 
 int cjoin(int tid) {
@@ -48,6 +66,7 @@ int cjoin(int tid) {
     else{
         printf("SEM THREAD EXECUTANDO\n");
     }
+
     //RUN THREAD
 	TCB_t* tcb = findTCBbyTid(ready_queue, tid);
     printf("PROXIMA TCB A EXECUTAR: %d \n",tcb->tid);

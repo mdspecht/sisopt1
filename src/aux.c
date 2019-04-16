@@ -36,8 +36,10 @@ void end(){
 }
 
 void runThread(TCB_t* tcb){
-    
+    //REMOVE DA FILA DE APTOS
     removeTCBbyTid(ready_queue,tcb->tid);
+    
+    //COLOCA EM EXECUCAO
     tcb->state=PROCST_EXEC;
     runningTCB = tcb;
 
@@ -50,13 +52,17 @@ void runThread(TCB_t* tcb){
         setcontext(&runningTCB->context);
         printf("ESSE PRINTF NAO PODE EXECUTAR");
     }
-    printf("THREAD %d TERMINOU SUA EXECUÇÂO\n",tcb->tid);
+    
+    printf("PROGRAMA TERMINOU\n");
+    
 }
 
  void runNextThread(){
 	
 	if(isFilaEmpty(ready_queue)==1){
 		printf("SEM THREADS NA FILA DE APTOS\n");
+        setcontext(contextMain);
+        
 	}
     else{
         FirstFila2(ready_queue);
