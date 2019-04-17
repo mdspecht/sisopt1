@@ -9,48 +9,52 @@
 #include "../include/queue.h"
 #include "../include/context.h"
 
+static int CreateFila2_ARRAY(PFILA2 fila[], int size){
+	int i;
+	for(i=0;i<size;i++){
+		if(CreateFila2(fila[i])!=0){
+			return -1;
+		}
+	}
+	return 0;
+}
 
 /*
 Aloca e cria as filas APTO,BLOQUEADO E TERMINADO
 */
 int createQueues(){
-
+	int i;
     //ALOCA NA MEMORIA AS FILAS
-    ready_queue = malloc(sizeof(*ready_queue));
+	for(i=0;i< NUM_PRIO;i++){
+    	ready_queue[i] = malloc(sizeof(*ready_queue[0]));
+	}
     finished_queue = malloc(sizeof(*finished_queue));
     blocked_queue = malloc(sizeof(*blocked_queue));
 
     if (ready_queue==NULL || finished_queue==NULL || blocked_queue==NULL){
             perror("Falha ao alocar memoria para as filas");
             exit(-1);
-        }
+    }
 
     //CRIA AS FILAS
-    if (CreateFila2(ready_queue)!=0 || CreateFila2(finished_queue)!=0 || CreateFila2(blocked_queue)!=0){
+    if (CreateFila2_ARRAY(ready_queue, NUM_PRIO)!=0 || CreateFila2(finished_queue)!=0 || CreateFila2(blocked_queue)!=0){
             perror("Falha ao criar as filas");
             exit(-1);
-        }
+    }
 
     return 0;
 }
 
+#if 0
 /*
 Insere na fila de aptos ordenada pela prioridade
 */
 int appendFilaPrio(PFILA2 pfila, TCB_t* tcb) {
-    TCB_t* tcb_it;
-
     // pfile vazia?
-    if (FirstFila2(pfila)==0) { //SETA O ITERADOR NO COMECO DA FILA
-        do {
-            tcb_it = (TCB_t *) GetAtIteratorFila2(pfila);
-            if (tcb->prio < tcb_it->prio) {
-                return InsertBeforeIteratorFila2(pfila, tcb);
-            }
-        } while (NextFila2(pfila)==0);
-    }
-    return AppendFila2(pfila, (void *)tcb);
+    return AppendFila2(pfila[tcb->prio], (void *)tcb);
 }
+#endif
+
 
 int isFilaEmpty(PFILA2 pFILA2){
     if (FirstFila2(pFILA2)==0)

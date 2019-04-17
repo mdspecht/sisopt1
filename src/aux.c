@@ -13,14 +13,19 @@
 
 int so_start = 0;
 
-
 int init(){
     if(so_start==0){ 
+		printf("%s: entered;\n",__FUNCTION__);
         so_start = 1;
-        if(createQueues()){
-            printf("As filas foram criadas com sucesso.");
+        if(createQueues()==0){
+            printf("As filas foram criadas com sucesso.\n");
         }
         contextMain = allocContext();
+
+		mainTCB= createTcb(contextMain, PRIO_MIN);
+		mainTCB->state = PROCST_APTO;
+		mainTCB->joined= NULL;
+		runningTCB= mainTCB;
     }
     return 0;
 }
@@ -30,6 +35,13 @@ void end(){
 	runningTCB->state = PROCST_TERMINO;
     printf("THREAD %d ENTROU NA FILA DE FINALIZADOS\n",runningTCB->tid);
     AppendFila2(finished_queue,runningTCB);
+	
+	if(runningTCB->joined){
+		TCB_t* tcb= runningTCB->joined;
+		tcb->state= PROCST_APTO;
+		AppendFila2(ready_queue[tcb->prio], tcb);
+		printf("Liberando tid(%d) para aptos.\n", tcb->tid);
+	}
     runningTCB = NULL;
     runNextThread();
     
@@ -37,14 +49,14 @@ void end(){
 
 void runThread(TCB_t* tcb){
     //REMOVE DA FILA DE APTOS
-    removeTCBbyTid(ready_queue,tcb->tid);
-    
+	removeTCBbyTid(ready_queue[tcb->prio],tcb->tid);
+
     //COLOCA EM EXECUCAO
     tcb->state=PROCST_EXEC;
     runningTCB = tcb;
 
     int ret = 0;
-    getcontext(contextMain);
+    //getcontext(contextMain);
 
     if(ret==0){
         ret=1;
@@ -58,18 +70,22 @@ void runThread(TCB_t* tcb){
 }
 
  void runNextThread(){
-	
-	if(isFilaEmpty(ready_queue)==1){
-		printf("SEM THREADS NA FILA DE APTOS\n");
-        setcontext(contextMain);
-        
+	int i;	
+	for(i=0;i<NUM_PRIO;i++){
+		if(!isFilaEmpty(ready_queue[i])){
+			break;
+		}
 	}
-    else{
-        FirstFila2(ready_queue);
-        runThread(ready_queue->it->node);
+	if(i==NUM_PRIO){
+		printf("SEM THREADS NA FILA DE APTOS\n");
+        //apenas retorna nesse mesmo contexto...
+		//setcontext(contextMain);
+        
+	}else{
+        FirstFila2(ready_queue[i]);
+        runThread(ready_queue[i]->it->node);
     }
     
-    
-}   
+}
 
 

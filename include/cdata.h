@@ -19,6 +19,7 @@ typedef struct s_TCB {
 	
 	/* A PARTIR DESSE PONTO PODEM SER ACRESCENTADOS CAMPOS NECESS�RIOS AO DESENVOLVIMENTO DA BIBLIOTECA
 	*/
+	struct s_TCB *joined;
 	
 } TCB_t; 
 
@@ -39,10 +40,11 @@ typedef struct s_TCB {
 #define PRIO_MED 1
 #define PRIO_MIN 2
 
-static int tid_global;
+//static int tid_global;
 
 //  TCB executando no momento
 TCB_t* runningTCB;
+TCB_t* mainTCB;
 
 
 TCB_t* createTcb(ucontext_t* context,int prio);

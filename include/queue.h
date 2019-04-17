@@ -6,8 +6,9 @@
 #include "../include/context.h"
 #include "../include/aux.h"
 
-//FILAS
-PFILA2 ready_queue;
+#define NUM_PRIO	3
+
+PFILA2 ready_queue[NUM_PRIO];
 PFILA2 finished_queue;
 PFILA2 blocked_queue;
 

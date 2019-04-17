@@ -2,13 +2,13 @@
 #include <string.h>
 #include <ucontext.h>
 #include <stdio.h>
+#include <signal.h>
 
 
 #include "../include/cdata.h"
 #include "../include/support.h"
 #include "../include/queue.h"
 #include "../include/context.h"
-
 
 ucontext_t* allocContext(){
     ucontext_t* context = malloc(sizeof(*context));
