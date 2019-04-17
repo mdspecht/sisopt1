@@ -1,2 +1,13 @@
+PARA COMPILAR NO HOST:
+
+Talvez seja necessario instalar as libs 32bits:
+ubuntu:
+sudo apt-get install libc6-dev-i386
+
+EXECUTAR dentro do diretorio /src:
+$ make 
+$ ./main
+
+
 gcc main.c aux.c cthread.c queue.c tcb.c context.c ../bin/support.o -o main
 ./main
