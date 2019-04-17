@@ -31,4 +31,8 @@ int main(int argc, char *argv[]) {
 	cjoin(id0);
 
 	printf("Eu sou a main voltando para terminar o programa\n");
+	char str[256];	
+	if(cidentify (str, sizeof(str))==0){
+		printf("%s", str);
+	}
 }

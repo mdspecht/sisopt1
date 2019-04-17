@@ -1,5 +1,6 @@
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "../include/aux.h"
@@ -102,15 +103,40 @@ int cjoin(int tid) {
 }
 
 int csem_init(csem_t *sem, int count) {
-	return -1;
+	sem= malloc(sizeof(*sem));
+	if(sem==NULL){
+		return -1;
+	}
+	sem->count= count;
+	sem->fila= malloc(sizeof(*(sem->fila)));
+	if(sem->fila==NULL){
+		return -1;
+	}
+	return CreateFila2(sem->fila);
+
 }
 
 int cwait(csem_t *sem) {
-	return -1;
+	sem->count--;
+	if(sem->count < 0){
+		appendFilaPrio(sem->fila, runningTCB);
+		internal_yield(1);
+	}
+	return 0;
 }
 
 int csignal(csem_t *sem) {
-	return -1;
+	TCB_t *tcb;
+	sem->count++;
+	if(!isFilaEmpty(sem->fila)){
+    	FirstFila2(sem->fila);
+       	tcb= (TCB_t *)GetAtIteratorFila2(sem->fila);
+		DeleteAtIteratorFila2(sem->fila);
+		tcb->state= PROCST_APTO;
+		return AppendFila2(ready_queue[tcb->prio], (void *)tcb);
+		//iterate over sem and select the one to back to read_queue
+	}
+	return 0;
 }
 
 int cidentify (char *name, int size) {

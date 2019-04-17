@@ -45,15 +45,23 @@ int createQueues(){
     return 0;
 }
 
-#if 0
 /*
-Insere na fila de aptos ordenada pela prioridade
+Insere na fila de semaforo ordenada pela prioridade
 */
-int appendFilaPrio(PFILA2 pfila, TCB_t* tcb) {
+int appendFilaPrio(PFILA2 pfila, TCB_t* tcb){
+    TCB_t* tcb_it;
+
     // pfile vazia?
-    return AppendFila2(pfila[tcb->prio], (void *)tcb);
-}
-#endif
+    if (FirstFila2(pfila)==0) { //SETA O ITERADOR NO COMECO DA FILA
+        do {
+            tcb_it = (TCB_t *) GetAtIteratorFila2(pfila);
+            if(tcb->prio < tcb_it->prio) {
+                return InsertBeforeIteratorFila2(pfila, tcb);
+            }
+        } while (NextFila2(pfila)==0);
+    }
+    return AppendFila2(pfila, (void *)tcb);
+ }
 
 
 int isFilaEmpty(PFILA2 pFILA2){

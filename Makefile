@@ -15,22 +15,19 @@ LIB_DIR=./lib
 INC_DIR=./include
 BIN_DIR=./bin
 SRC_DIR=./src
+C_FLAGS=-m32 -Wall
 
-all: regra1 regra2 regra3 regra4
+OBJS=$(patsubst $(SRC_DIR)/%.c, $(BIN_DIR)/%.o, $(wildcard $(SRC_DIR)/*.c))
 
-regra1: #dependências para a regra1
-	$(CC) -o $(BIN_DIR)regra1 $(SRC_DIR)aux1.c -Wall
+all: build_lib
+	echo $(OBJS)
 
-regra2: #dependências para a regra2
-	$(CC) -o $(BIN_DIR)regra2 $(SRC_DIR)cthread.c -Wall
+$(BIN_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) -c -o $@ $< $(C_FLAGS)
 
-regra3: #dependências para a regran
-	$(CC) -o $(BIN_DIR)regran $(SRC_DIR)main.c -Wall
-
-regra4: #dependências para a regran
-	$(CC) -o $(BIN_DIR)regran $(SRC_DIR)teste.c -Wall
+build_lib: $(OBJS)
+	ar crs $(LIB_DIR)/libcthread.a $(BIN_DIR)/*.o $(BIN_DIR)/support.o
 
 clean:
-	rm -rf $(LIB_DIR)/*.a $(BIN_DIR)/*.o $(SRC_DIR)/*~ $(INC_DIR)/*~ *~
-
+	rm -rf $(LIB_DIR)/*.a $(OBJS)
 

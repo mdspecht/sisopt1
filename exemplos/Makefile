@@ -4,32 +4,25 @@
 
 CC=gcc
 LIB_DIR=../lib
+C_FLAGS=-m32 -Wall
 
-all: exemplo mandel teste_vetor barbeiro filosofos prodcons series
+all: exemplo mandel teste_vetor series
 
 exemplo: exemplo.c $(LIB_DIR)/libcthread.a
-	$(CC) -o exemplo exemplo.c -L$(LIB_DIR) -lcthread -Wall
+	$(CC) -o exemplo exemplo.c -L$(LIB_DIR) -lcthread $(C_FLAGS)
 
 teste_vetor: teste_vetor.c $(LIB_DIR)/libcthread.a
-	$(CC) -o teste_vetor teste_vetor.c -L$(LIB_DIR) -lcthread -Wall
+	$(CC) -o teste_vetor teste_vetor.c -L$(LIB_DIR) -lcthread $(C_FLAGS)
 
 mandel: mandel.c $(LIB_DIR)/libcthread.a
-	$(CC) -o mandel mandel.c -L$(LIB_DIR) -lcthread -lm -Wall
+	$(CC) -o mandel mandel.c -L$(LIB_DIR) -lcthread -lm $(C_FLAGS)
 
-barbeiro: barbeiro.c $(LIB_DIR)/libcthread.a
-	$(CC) -o barbeiro barbeiro.c -L$(LIB_DIR) -lcthread -lm -Wall
-
-filosofos: filosofos.c $(LIB_DIR)/libcthread.a
-	$(CC) -o filosofos filosofos.c -L$(LIB_DIR) -lcthread -lm -Wall
-
-prodcons: prodcons.c $(LIB_DIR)/libcthread.a
-	$(CC) -o prodcons prodcons.c -L$(LIB_DIR) -lcthread -lm -Wall
 
 series: series.c $(LIB_DIR)/libcthread.a
-	$(CC) -o series series.c -L$(LIB_DIR) -lcthread -lm -Wall
+	$(CC) -o series series.c -L$(LIB_DIR) -lcthread -lm $(C_FLAGS)
 	
 clean:
-	rm -rf exemplo mandel teste_vetor barbeiro filosofos prodcons series *.o *~
+	rm -rf exemplo mandel teste_vetor series *.o *~
 
 
 
