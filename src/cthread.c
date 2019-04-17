@@ -140,7 +140,7 @@ int csignal(csem_t *sem) {
 }
 
 int cidentify (char *name, int size) {
-    const char* names = "JESSICA - XXXXXX\nMARCELO - 230090\nRICARDO - 160542\n"; //porque o \0?
+    const char* names = "Jessica Maria Lorencetti - 228342\nMarcelo Dutra Specht - 230090\nRicardo de Araujo Coelho - 160542\n";
     if(strlen(names)<=size){
         strncpy(name,names,size);
         return 0;
