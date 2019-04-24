@@ -103,10 +103,6 @@ int cjoin(int tid) {
 }
 
 int csem_init(csem_t *sem, int count) {
-	sem= malloc(sizeof(*sem));
-	if(sem==NULL){
-		return -1;
-	}
 	sem->count= count;
 	sem->fila= malloc(sizeof(*(sem->fila)));
 	if(sem->fila==NULL){
@@ -117,6 +113,7 @@ int csem_init(csem_t *sem, int count) {
 }
 
 int cwait(csem_t *sem) {
+	printf("%s: count=%d\n",__FUNCTION__, sem->count);
 	sem->count--;
 	if(sem->count < 0){
 		appendFilaPrio(sem->fila, runningTCB);
@@ -126,6 +123,7 @@ int cwait(csem_t *sem) {
 }
 
 int csignal(csem_t *sem) {
+	printf("%s\n",__FUNCTION__);
 	TCB_t *tcb;
 	sem->count++;
 	if(!isFilaEmpty(sem->fila)){
