@@ -1,19 +1,17 @@
 #
-# Makefile para programas exemplo
+# Makefile para programas de teste
 # 
 
 CC=gcc
 LIB_DIR=../lib
-C_FLAGS=-m32 -Wall
+CFLAGS=-lcthread -Wall -m32
 
-all: main
+all: teste_vetor_2
 
-main: main.c $(LIB_DIR)/libcthread.a
-	$(CC) -o main main.c -L$(LIB_DIR) -lcthread $(C_FLAGS)
+teste_vetor_2: teste_vetor_2.c $(LIB_DIR)/libcthread.a
+	$(CC) -o teste_vetor_2 teste_vetor_2.c -L$(LIB_DIR) $(CFLAGS)
+
+.PHONY: all clean teste_vetor_2
 	
 clean:
-	rm -rf main *.o *~
-
-
-
-
+	rm -rf teste_vetor_2 *.o *~
